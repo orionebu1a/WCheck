@@ -5,7 +5,6 @@ import WCheck.dtos.UserDTO;
 import WCheck.entities.UserName;
 import WCheck.services.UserService;
 
-import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class UserController {
     }
 
     // Получение записи по ID
-    @GetMapping("/user/get")
+    @GetMapping("/user/get/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         UserName userName = userService.getUser(id);
         return ResponseEntity.ok(EntityDtoConverter.convertToDto(userName, UserDTO.class));
