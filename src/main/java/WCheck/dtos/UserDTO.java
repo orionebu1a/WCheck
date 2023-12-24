@@ -1,5 +1,6 @@
 package WCheck.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDTO {
+    @JsonProperty("id")
     private long id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("age")
     private int age;
+    @JsonProperty("listFeedbackIds")
     private List<Long> listFeedbackIds;
 }
 

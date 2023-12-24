@@ -1,9 +1,7 @@
 package WCheck.services;
 
 import WCheck.entities.Feedback;
-import WCheck.entities.User;
 import WCheck.repos.FeedbackRepository;
-import WCheck.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

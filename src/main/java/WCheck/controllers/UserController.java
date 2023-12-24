@@ -2,9 +2,10 @@ package WCheck.controllers;
 
 import WCheck.converter.EntityDtoConverter;
 import WCheck.dtos.UserDTO;
-import WCheck.entities.User;
+import WCheck.entities.UserName;
 import WCheck.services.UserService;
 
+import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +25,15 @@ public class UserController {
     // Получение записи по ID
     @GetMapping("/user/get")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        User user = userService.getUser(id);
-        return ResponseEntity.ok(EntityDtoConverter.convertToDto(user, UserDTO.class));
+        UserName userName = userService.getUser(id);
+        return ResponseEntity.ok(EntityDtoConverter.convertToDto(userName, UserDTO.class));
     }
 
     // Создание новой записи
     @PostMapping("/user/post")
     public ResponseEntity<UserDTO> createYourEntity(@RequestBody UserDTO user) {
-        User createdUser = userService.createUser(EntityDtoConverter.convertToEntity(user, User.class));
-        return new ResponseEntity<>(EntityDtoConverter.convertToDto(createdUser, UserDTO.class), HttpStatus.CREATED);
+        UserName userName = EntityDtoConverter.convertToEntity(user, UserName.class);
+        UserName createdUserName = userService.createUser(userName);
+        return new ResponseEntity<>(EntityDtoConverter.convertToDto(createdUserName, UserDTO.class), HttpStatus.CREATED);
     }
 }

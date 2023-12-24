@@ -1,7 +1,6 @@
 package WCheck.services;
 
-import WCheck.dtos.UserDTO;
-import WCheck.entities.User;
+import WCheck.entities.UserName;
 import WCheck.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserName createUser(UserName userName) {
+        return userRepository.save(userName);
     }
 
-    public User getUser(Long id) {
+    public UserName getUser(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 

@@ -1,4 +1,6 @@
 package WCheck.converter;
+import WCheck.dtos.UserDTO;
+import WCheck.entities.UserName;
 import org.modelmapper.ModelMapper;
 
 public class EntityDtoConverter {

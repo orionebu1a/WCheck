@@ -1,9 +1,7 @@
 package WCheck.repos;
 
-import WCheck.entities.User;
+import WCheck.entities.UserName;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<UserName, Long> {
 }
