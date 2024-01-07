@@ -23,14 +23,14 @@ public class FeedbackController {
 
     // Получение записи по ID
     @GetMapping("/feedback/get/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getFeedbackById(@PathVariable Long id) {
         Feedback feedback = feedbackService.getFeedback(id);
         return ResponseEntity.ok(EntityDtoConverter.convertToDto(feedback, UserDTO.class));
     }
 
     // Создание новой записи
     @PostMapping("/feedback/post")
-    public ResponseEntity<FeedbackDTO> createYourEntity(@RequestBody FeedbackDTO feedbackDTO) {
+    public ResponseEntity<FeedbackDTO> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
         Feedback feedback = EntityDtoConverter.convertToEntity(feedbackDTO, Feedback.class);
         Feedback createdFeedback = feedbackService.createFeedback(feedback);
         return new ResponseEntity<>(EntityDtoConverter.convertToDto(createdFeedback, FeedbackDTO.class), HttpStatus.CREATED);

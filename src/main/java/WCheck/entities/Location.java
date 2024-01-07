@@ -20,4 +20,6 @@ public class Location {
     private long longitude;
     @ElementCollection
     private List<Long> listFeedbackIds;
+    @ElementCollection
+    private List<Long> photoIds;
 }

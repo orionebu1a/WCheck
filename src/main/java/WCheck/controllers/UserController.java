@@ -30,7 +30,7 @@ public class UserController {
 
     // Создание новой записи
     @PostMapping("/user/post")
-    public ResponseEntity<UserDTO> createYourEntity(@RequestBody UserDTO user) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user) {
         UserName userName = EntityDtoConverter.convertToEntity(user, UserName.class);
         UserName createdUserName = userService.createUser(userName);
         return new ResponseEntity<>(EntityDtoConverter.convertToDto(createdUserName, UserDTO.class), HttpStatus.CREATED);
