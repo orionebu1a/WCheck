@@ -1,6 +1,7 @@
 package WCheck.controllers;
 
 import WCheck.converter.EntityDtoConverter;
+import WCheck.dtos.BorderDTO;
 import WCheck.dtos.LocationDTO;
 import WCheck.dtos.UserDTO;
 import WCheck.entities.Feedback;
@@ -65,6 +66,11 @@ public class LocationController {
         List<Long> feedbackIds = location.getListFeedbackIds();
         List<Feedback> feedbacks = feedbackService.getFeedbacks(feedbackIds);
         return feedbacks.stream().mapToInt(Feedback::getMark).average();
+    }
+
+    @GetMapping("/location/mapborder")
+    public List<Location> getLocationsInBorder(@RequestBody BorderDTO borderDTO){
+        List<Location> locations = locationService.getAllLocations();
     }
 
 }

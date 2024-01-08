@@ -1,9 +1,12 @@
 package WCheck.services;
 
+import WCheck.entities.Feedback;
 import WCheck.entities.Location;
 import WCheck.repos.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LocationService {
@@ -24,5 +27,9 @@ public class LocationService {
 
     public void deleteLocation(Long id) {
         locationRepository.deleteById(id);
+    }
+
+    public List<Location> getLocations(List<Long> ids){
+        return (List<Location>) locationRepository.findAllById(ids);
     }
 }
