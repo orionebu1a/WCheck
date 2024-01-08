@@ -1,9 +1,18 @@
 package WCheck.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

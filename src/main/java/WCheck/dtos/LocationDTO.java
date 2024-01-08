@@ -12,7 +12,8 @@ import java.util.List;
 @Setter
 public class LocationDTO {
     private long id;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
     private List<Long> listFeedbackIds;
+    private List<Long> photoIds;
 }
