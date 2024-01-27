@@ -68,9 +68,9 @@ public class LocationController {
         return feedbacks.stream().mapToInt(Feedback::getMark).average();
     }
 
-    @GetMapping("/location/mapborder")
+    @PostMapping("/location/mapBorder")
     public List<Location> getLocationsInBorder(@RequestBody BorderDTO borderDTO){
-        List<Location> locations = locationService.getAllLocations();
+        return locationService.getAllLocationsInBorder(borderDTO);
     }
 
 }

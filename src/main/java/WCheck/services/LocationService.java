@@ -1,5 +1,6 @@
 package WCheck.services;
 
+import WCheck.dtos.BorderDTO;
 import WCheck.entities.Feedback;
 import WCheck.entities.Location;
 import WCheck.repos.LocationRepository;
@@ -30,6 +31,10 @@ public class LocationService {
     }
 
     public List<Location> getLocations(List<Long> ids){
-        return (List<Location>) locationRepository.findAllById(ids);
+        return locationRepository.findAllById(ids);
+    }
+
+    public List<Location> getAllLocationsInBorder(BorderDTO borderDTO) {
+        return locationRepository.findByLatitudeBetweenAndLongitudeBetween(borderDTO.getSouth(), borderDTO.getNorth(), borderDTO.getWest(), borderDTO.getEast());
     }
 }
