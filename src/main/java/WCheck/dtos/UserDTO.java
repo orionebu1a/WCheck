@@ -19,6 +19,8 @@ public class UserDTO {
     private String name;
     @JsonProperty("age")
     private int age;
+    @JsonProperty("password")
+    private int password;
     @JsonProperty("listFeedbackIds")
     private List<Long> listFeedbackIds;
 }

@@ -24,7 +24,7 @@ public class UserController {
     // Получение записи по ID
     @GetMapping("/user/get/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        UserName userName = userService.getUser(id);
+        UserName userName = userService.getUserById(id);
         return ResponseEntity.ok(EntityDtoConverter.convertToDto(userName, UserDTO.class));
     }
 
