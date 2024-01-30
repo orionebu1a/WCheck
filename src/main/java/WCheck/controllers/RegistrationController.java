@@ -1,5 +1,6 @@
 package WCheck.controllers;
 
+import WCheck.dtos.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<String> registerUser(@RequestBody UserName user) {
-        if (userService.registerUser(user)) {
+    public ResponseEntity<String> registerUser(@RequestBody LoginDTO login) {
+        if (userService.registerUser(new UserName(login.getUserName(), login.getPassword()))) {
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken");

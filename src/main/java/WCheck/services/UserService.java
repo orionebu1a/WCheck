@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 
 @Service
@@ -36,9 +37,9 @@ public class UserService implements UserDetailsService{
     }
 
     public boolean registerUser(UserName user) {
-        UserName userFromDB = userRepository.findByUsername(user.getUsername());
+        Optional<UserName> userFromDB = userRepository.findByUsername(user.getUsername());
 
-        if (userFromDB != null) {
+        if (userFromDB.isPresent()) {
             return false;
         }
 
@@ -58,13 +59,13 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserName user = userRepository.findByUsername(username);
+        Optional<UserName> user = userRepository.findByUsername(username);
 
-        if (user == null) {
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return user;
+        return user.get();
     }
 }
 

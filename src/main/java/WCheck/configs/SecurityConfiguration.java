@@ -31,11 +31,13 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/api/register").permitAll()
-                                .anyRequest().permitAll()
-                        //.anyRequest().authenticated()
+                        .requestMatchers("/api/login").permitAll()
+                        .anyRequest().authenticated()
                 ).csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
+
+
 }
 
 

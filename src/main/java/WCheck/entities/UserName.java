@@ -36,6 +36,11 @@ public class UserName implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    public UserName(@Size(min = 5, message = "Не меньше 5 знаков") String username, @Size(min = 8, message = "Не меньше 8 знаков") String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
