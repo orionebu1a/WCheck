@@ -23,11 +23,9 @@ public class UserName implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min=5, message = "Не меньше 5 знаков")
     private String username;
     private int age;
 
-    @Size(min=8, message = "Не меньше 8 знаков")
     private String password;
 
     @ElementCollection
