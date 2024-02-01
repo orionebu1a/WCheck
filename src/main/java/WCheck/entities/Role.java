@@ -1,14 +1,14 @@
 package WCheck.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -17,7 +17,14 @@ import org.springframework.security.core.GrantedAuthority;
 @Getter
 public class Role implements GrantedAuthority {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinTable(name="user_role",
+            joinColumns=  @JoinColumn(name="role_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="user_id", referencedColumnName="id") )
+    private Set<UserName> users = new HashSet<>();
 
     private String name;
 
