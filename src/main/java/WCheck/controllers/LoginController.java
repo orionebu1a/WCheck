@@ -29,14 +29,14 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
         try {
             authenticate(loginDTO.getUserName(), loginDTO.getPassword());
             final UserDetails userDetails = userService.loadUserByUsername(loginDTO.getUserName());
             final String token = jwtTokenUtil.generateToken(userDetails);
             TokenDTO tokenDTO = new TokenDTO();
             tokenDTO.setToken(token);
-            return new ResponseEntity<>(tokenDTO, HttpStatus.OK);
+            return new ResponseEntity<>(tokenDTO.getToken(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }

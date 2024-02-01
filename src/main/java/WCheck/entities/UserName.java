@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,8 +32,13 @@ public class UserName implements UserDetails {
     @ElementCollection
     private List<Long> listFeedbackIds;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public UserName(@Size(min = 5, message = "Не меньше 5 знаков") String username, @Size(min = 8, message = "Не меньше 8 знаков") String password) {
         this.username = username;
@@ -41,6 +47,7 @@ public class UserName implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return roles;
     }
 
@@ -51,21 +58,21 @@ public class UserName implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

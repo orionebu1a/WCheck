@@ -32,9 +32,9 @@ public class LocationController {
 
     // Получение записи по ID
     @GetMapping("/location/get/{id}")
-    public ResponseEntity<UserDTO> getLocationById(@PathVariable Long id) {
+    public ResponseEntity<LocationDTO> getLocationById(@PathVariable Long id) {
         Location location = locationService.getLocation(id);
-        return ResponseEntity.ok(EntityDtoConverter.convertToDto(location, UserDTO.class));
+        return ResponseEntity.ok(EntityDtoConverter.convertToDto(location, LocationDTO.class));
     }
 
     // Создание новой записи

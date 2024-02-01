@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/api/register").permitAll()
                         .requestMatchers("/api/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/location/**").authenticated()
                 ).csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }

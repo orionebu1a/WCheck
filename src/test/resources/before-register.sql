@@ -1,1 +1,2 @@
-delete from user_name;
+-- delete from user_name;
+-- insert into role (id, name) values (1, 'ROLE_USER');

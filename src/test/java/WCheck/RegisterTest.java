@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = Application.class)
 @AutoConfigureMockMvc
-@Sql(value = {"classpath:before-register.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//@Sql(value = {"classpath:before-register.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class RegisterTest {
     @Autowired
     private UserService userService;
