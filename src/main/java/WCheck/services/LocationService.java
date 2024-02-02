@@ -6,6 +6,7 @@ import WCheck.entities.Location;
 import WCheck.repos.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,5 +37,10 @@ public class LocationService {
 
     public List<Location> getAllLocationsInBorder(BorderDTO borderDTO) {
         return locationRepository.findByLatitudeBetweenAndLongitudeBetween(borderDTO.getSouth(), borderDTO.getNorth(), borderDTO.getWest(), borderDTO.getEast());
+    }
+
+    @Transactional
+    public Location saveLocation(Location location) {
+        return locationRepository.save(location);
     }
 }

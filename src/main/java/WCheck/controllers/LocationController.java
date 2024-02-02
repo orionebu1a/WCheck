@@ -3,12 +3,10 @@ package WCheck.controllers;
 import WCheck.converter.EntityDtoConverter;
 import WCheck.dtos.BorderDTO;
 import WCheck.dtos.LocationDTO;
-import WCheck.dtos.UserDTO;
 import WCheck.entities.Feedback;
 import WCheck.entities.Location;
 import WCheck.services.FeedbackService;
 import WCheck.services.LocationService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

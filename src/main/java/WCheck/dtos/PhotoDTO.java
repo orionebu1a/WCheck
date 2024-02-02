@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PhotoDTO {
+public class  PhotoDTO {
     @JsonProperty("id")
     private long id;
     @JsonProperty("data")

@@ -4,6 +4,7 @@ import WCheck.entities.Feedback;
 import WCheck.repos.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,10 @@ public class FeedbackService {
 
     public List<Feedback> getFeedbacks(List<Long> ids){
         return (List<Feedback>) feedbackRepository.findAllById(ids);
+    }
+
+    @Transactional
+    public Feedback saveFeedback(Feedback feedback) {
+        return feedbackRepository.save(feedback);
     }
 }

@@ -27,4 +27,7 @@ public class Photo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Location location;
+
 }

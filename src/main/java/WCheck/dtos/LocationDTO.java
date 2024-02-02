@@ -14,6 +14,4 @@ public class LocationDTO {
     private long id;
     private double latitude;
     private double longitude;
-    private List<Long> listFeedbackIds;
-    private List<Long> photoIds;
 }
