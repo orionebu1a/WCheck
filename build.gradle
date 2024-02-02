@@ -32,6 +32,8 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-core'
 	implementation 'org.springframework.security:spring-security-config'
 	implementation 'org.springframework.security:spring-security-web'
+	implementation 'javax.persistence:javax.persistence-api:2.2'
+	implementation 'io.swagger.core.v3:swagger-annotations:2.1.10'
 }
 
 tasks.named('test') {

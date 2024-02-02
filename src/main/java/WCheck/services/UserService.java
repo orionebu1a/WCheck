@@ -4,6 +4,7 @@ import WCheck.entities.Role;
 import WCheck.entities.UserName;
 import WCheck.repos.RoleRepository;
 import WCheck.repos.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,19 +15,13 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Optional;
 
-
+@AllArgsConstructor
 @Service
 public class UserService implements UserDetailsService{
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final RoleRepository roleRepository;
-
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.roleRepository = roleRepository;
-    }
+    private final UserRepository userRepository;
+    @Autowired
+    private final RoleRepository roleRepository;
 
     public UserName createUser(UserName userName) {
         return userRepository.save(userName);
@@ -34,19 +29,6 @@ public class UserService implements UserDetailsService{
 
     public UserName getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
-    }
-
-    public boolean registerUser(UserName user) {
-        Optional<UserName> userFromDB = userRepository.findByUsername(user.getUsername());
-
-        if (userFromDB.isPresent()) {
-            return false;
-        }
-        Optional<Role> role = roleRepository.findById(1L);
-        role.ifPresent(value -> user.getRoles().add(value));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return true;
     }
 
     public boolean deleteUser(Long userId) {
@@ -66,6 +48,14 @@ public class UserService implements UserDetailsService{
         }
 
         return user.get();
+    }
+
+    public Optional<UserName> getUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
+    }
+
+    public UserDetailsService userDetailsService() {
+        return this;
     }
 }
 
