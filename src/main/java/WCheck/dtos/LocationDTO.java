@@ -14,4 +14,5 @@ public class LocationDTO {
     private long id;
     private double latitude;
     private double longitude;
+    private String hashtag;
 }

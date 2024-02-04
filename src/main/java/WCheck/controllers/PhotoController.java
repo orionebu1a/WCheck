@@ -54,6 +54,7 @@ public class PhotoController {
             return new ResponseEntity<>(EntityDtoConverter.convertToDto(photo, PhotoDTO.class), HttpStatus.NOT_FOUND);
         }
         location.getPhotos().add(photo);
+        locationService.saveLocation(location);
         return new ResponseEntity<>(EntityDtoConverter.convertToDto(photo, PhotoDTO.class), HttpStatus.CREATED);
     }
 

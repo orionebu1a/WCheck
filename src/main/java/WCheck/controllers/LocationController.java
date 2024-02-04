@@ -5,11 +5,15 @@ import WCheck.dtos.BorderDTO;
 import WCheck.dtos.LocationDTO;
 import WCheck.entities.Feedback;
 import WCheck.entities.Location;
+import WCheck.entities.UserName;
 import WCheck.services.FeedbackService;
 import WCheck.services.LocationService;
+import WCheck.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +25,13 @@ public class LocationController {
 
     private final LocationService locationService;
     private final FeedbackService feedbackService;
+    private final UserService userService;
 
     @Autowired
-    public LocationController(LocationService locationService, FeedbackService feedbackService) {
+    public LocationController(LocationService locationService, FeedbackService feedbackService, UserService userService) {
         this.locationService = locationService;
         this.feedbackService = feedbackService;
+        this.userService = userService;
     }
 
     // Получение записи по ID
@@ -43,32 +49,51 @@ public class LocationController {
         return new ResponseEntity<>(EntityDtoConverter.convertToDto(createdLocation, LocationDTO.class), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{locationId}/feedbacks")
+    @GetMapping("/location/{locationId}/feedbacks")
     public ResponseEntity<List<Feedback>> getFeedbacksForLocation(@PathVariable Long locationId) {
         Location location = locationService.getLocation(locationId);
         if (location == null) {
             return ResponseEntity.notFound().build();
         }
 
-        List<Long> feedbackIds = location.getListFeedbackIds();
-        List<Feedback> feedbacks = feedbackService.getFeedbacks(feedbackIds);
+        List<Feedback> feedbacks = location.getFeedbacks();
         return ResponseEntity.ok(feedbacks);
     }
 
-    @GetMapping("/{locationId}/averageMark")
+    @GetMapping("/location/{locationId}/averageMark")
     public OptionalDouble getAverageMark(@PathVariable Long locationId){
         Location location = locationService.getLocation(locationId);
         if (location == null) {
             return OptionalDouble.empty();
         }
-        List<Long> feedbackIds = location.getListFeedbackIds();
-        List<Feedback> feedbacks = feedbackService.getFeedbacks(feedbackIds);
+        List<Feedback> feedbacks = location.getFeedbacks();
         return feedbacks.stream().mapToInt(Feedback::getMark).average();
     }
 
     @PostMapping("/location/mapBorder")
     public List<Location> getLocationsInBorder(@RequestBody BorderDTO borderDTO){
         return locationService.getAllLocationsInBorder(borderDTO);
+    }
+
+    @PostMapping("/location/{locationId}/upvote")
+    public ResponseEntity<LocationDTO> upvoteLocation(@PathVariable Long locationId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        UserName userName = userService.loadUserByUsername(username);
+        Location location = locationService.getLocation(locationId);
+        if (location == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if(location.getVotes() == null){
+            location.setVotes(0);
+        }
+        if(location.getUpvoters().contains(userName)){
+            return ResponseEntity.badRequest().build();
+        }
+        location.setVotes(location.getVotes() + 1);
+        location.getUpvoters().add(userName);
+        locationService.saveLocation(location);
+        return new ResponseEntity<>(EntityDtoConverter.convertToDto(location, LocationDTO.class), HttpStatus.CREATED);
     }
 
 }

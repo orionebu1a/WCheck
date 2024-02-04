@@ -22,7 +22,7 @@ public class LocationTest {
 
     @Test
     public void postGetLocation(){
-        LocationDTO location = new LocationDTO(15, 46.57, 28.32, null, null);
+        LocationDTO location = new LocationDTO(15, 46.57, 28.32);
         locationController.createLocation(location);
         ResponseEntity<LocationDTO> responseEntity = locationController.getLocationById(location.getId());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

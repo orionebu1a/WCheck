@@ -19,8 +19,18 @@ public class Location {
     private long id;
     private double latitude;
     private double longitude;
-    @OneToMany(mappedBy = "feedback", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Integer votes;
+    private String hashtag;
+
+    @OneToMany
+    @JoinColumn(name = "location_id")
+    private List<UserName> upvoters = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "location_id")
     private List<Feedback> feedbacks = new ArrayList<>();
-    @OneToMany(mappedBy = "photo", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany
+    @JoinColumn(name = "location_id")
     private List<Photo> photos = new ArrayList<>();
 }

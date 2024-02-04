@@ -18,7 +18,4 @@ public class Feedback {
     private String text;
     private int mark;
     private long userId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Location location;
 }
