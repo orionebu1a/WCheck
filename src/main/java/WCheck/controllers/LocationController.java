@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -70,6 +71,14 @@ public class LocationController {
         return feedbacks.stream().mapToInt(Feedback::getMark).average();
     }
 
+    @PostMapping("/location/mapBorderFilter/{hashtag}")
+    public List<Location> getLocationsInBorderFilter(@RequestBody BorderDTO borderDTO, @PathVariable String hashtag){
+        return locationService.getAllLocationsInBorder(borderDTO)
+                .stream()
+                .filter(location -> hashtag.equals(location.getHashtag()))
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/location/mapBorder")
     public List<Location> getLocationsInBorder(@RequestBody BorderDTO borderDTO){
         return locationService.getAllLocationsInBorder(borderDTO);
@@ -95,5 +104,7 @@ public class LocationController {
         locationService.saveLocation(location);
         return new ResponseEntity<>(EntityDtoConverter.convertToDto(location, LocationDTO.class), HttpStatus.CREATED);
     }
+
+
 
 }

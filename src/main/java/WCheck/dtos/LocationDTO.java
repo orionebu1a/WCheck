@@ -15,4 +15,5 @@ public class LocationDTO {
     private double latitude;
     private double longitude;
     private String hashtag;
+    private Integer votes;
 }
