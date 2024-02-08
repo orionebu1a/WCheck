@@ -7,6 +7,7 @@ import WCheck.entities.UserName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,7 +34,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signUp(SignUpRequest request) {
+    public String signUp(SignUpRequest request) {
 
         UserName newUser = new UserName(request.getUsername(), passwordEncoder.encode(request.getPassword()));
 
@@ -47,7 +48,7 @@ public class AuthenticationService {
 
         var jwt = jwtService.generateToken(newUser);
 
-        return new JwtAuthenticationResponse(jwt);
+        return jwt;
     }
 
     /**
@@ -56,7 +57,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signIn(SignInRequest request) {
+    public String signIn(SignInRequest request) throws BadCredentialsException {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsername(),
                 request.getPassword()
@@ -67,6 +68,6 @@ public class AuthenticationService {
                 .loadUserByUsername(request.getUsername());
 
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return jwt;
     }
 }
